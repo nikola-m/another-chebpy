@@ -25,6 +25,6 @@ xx=np.linspace(-1.,1.,100)
 uu = np.polyval(np.polyfit(x,s,N),xx)    # interpolate grid data
 
 plt.title('max err = %e' % maxerr)
-plt.plot(xx,uu,'b')
+plt.plot(xx,uu,'b',x,exact,'o')
 plt.show()
 
