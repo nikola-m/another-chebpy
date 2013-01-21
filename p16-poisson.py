@@ -61,5 +61,4 @@ p.show()
 # If you have it installed:
 #from enthought.mayavi import mlab
 #mlab.surf(a,b,newfunc)
-#mlab.gcf()
 #mlab.savefig('p16-mlab.png')
