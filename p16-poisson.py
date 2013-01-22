@@ -59,6 +59,7 @@ ax.set_zlabel('u')
 p.show()
 
 # If you have it installed:
-#from enthought.mayavi import mlab
-#mlab.surf(a,b,newfunc)
+from enthought.mayavi import mlab
+mlab.surf(a,b,newfunc)
+mlab.show()
 #mlab.savefig('p16-mlab.png')
