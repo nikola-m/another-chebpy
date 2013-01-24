@@ -5,7 +5,7 @@ def cheb(N):
        Ref.: Trefethen's 'Spectral Methods in MATLAB' book.
     '''
     x = np.cos(np.pi*np.linspace(N,0,N+1)/N)
-    x[N/2]=0.0 # only when N is even!
+#    x[N/2]=0.0 # only when N is even!
     c=np.zeros(N+1)
     c[0]=2.
     c[1:N]=1.
