@@ -12,8 +12,8 @@ def cheb(N):
     c[N]=2.
     c = c * (-1)**np.linspace(0,N,N+1)
     X = np.tile(x, (N+1,1))
-    dX = X - X.conj().T
+    dX = X - X.T
     D = np.dot(c.reshape(N+1,1),(1./c).reshape(1,N+1))
     D = D / (dX+np.eye(N+1))
-    D = D - np.diag( D.conj().T.sum(axis=0) )
+    D = D - np.diag( D.T.sum(axis=0) )
     return D,x
