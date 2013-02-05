@@ -1,4 +1,4 @@
-# p15 - solve eigenvalue BVP u_xx = lambda8u, u(-1)=u(1)=0
+# p15 - solve eigenvalue BVP u_xx = lambda*u, u(-1)=u(1)=0
 import numpy as np
 from chebPy import cheb
 from scipy.linalg import solve, eig
@@ -20,13 +20,14 @@ V=V[:,ii]
 fig = plt.figure()
 #fig, axes = plt.subplots(nrows=6, ncols=1)
 #fig.tight_layout()
-eigs=np.linspace(5,30,6)       # plot 6 eigenvectors
+eigs=np.linspace(5,30,6)       # plot 6 eigenmodes
 for j in eigs:              
     lv = np.shape(V)[0]+2
     u = np.zeros(lv)
     u[1:lv-1] = V[:,int(j)]  
     ax1 = fig.add_subplot(6,1,j/5)
     ax1.plot(x,u,'bo')
+    plt.subplots_adjust(hspace = 0.5)
     xx=np.linspace(-1.,1.,100)
     uu = np.polyval(np.polyfit(x,u,N),xx)    # interpolate grid data
     ax1.text(-0.4,0.3,'eig %d = %20.13f * 4/$pi^2$' %(j,lam[j-1]*4/np.pi**2) )
