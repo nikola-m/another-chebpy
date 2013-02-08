@@ -3,6 +3,7 @@
 from chebPy import *
 import numpy as np
 from scipy.linalg import solve
+from scipy.interpolate import interp2d
 from matplotlib import pyplot as plt
 
 import pylab as p
@@ -31,18 +32,29 @@ uu[1:N,1:N] = u.reshape(N-1,N-1).transpose()
 xx,yy = np.meshgrid(x,y)
 value = uu[N/2,N/2]
 
+# Interpolate to finer grid and plot
+uu = uu.flatten(1)
+uuu = interp2d(x,y,uu,kind='cubic')
+
+a = np.linspace(-1.,1.,100)
+b = np.linspace(-1.,1.,100)
+xxx,yyy = np.meshgrid(a,b)
+newfunc = uuu(a,b)
+
 # Plot results
 # wireframe:
 fig=p.figure()
 ax = p3.Axes3D(fig)
-#ax.contourf(xx,yy,uu)
-ax.plot_wireframe(xx,yy,uu)
-ax.plot_surface(xx,yy,uu,rstride=1, cstride=1, cmap=cm.YlGnBu,
+ax.plot_wireframe(xxx,yyy,newfunc)
+ax.plot_surface(xxx,yyy,newfunc,rstride=1, cstride=1, cmap=cm.YlGnBu,
         linewidth=1, antialiased=False)
-#ax.plot_surface(X,Y,u,rstride=1, cstride=1,alpha=0.5)
 ax.text(-0.8,0.5,.022,'u(0,0) = %13.11f' % value)
 ax.set_xlabel('X')
 ax.set_ylabel('Y')
 ax.set_zlabel('Z')
 p.show()
 
+# mlba plotting
+from enthought.mayavi import mlab
+mlab.surf(a,b,newfunc)
+mlab.show()
