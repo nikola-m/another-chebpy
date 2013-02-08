@@ -33,7 +33,6 @@ u=solve(L,f)  # Solve system
 uu=np.zeros((N+1,N+1))
 uu[1:N,1:N] = u.reshape(N-1,N-1).transpose()
 xx,yy = np.meshgrid(x,y)
-
 # Interpolate to finer grid and plot
 uu = uu.flatten(1)
 uuu = interp2d(x,y,uu,kind='cubic')
