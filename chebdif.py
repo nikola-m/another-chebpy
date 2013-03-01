@@ -20,6 +20,9 @@ def chebdif(N,M):
     %  which is necessary since sin t can be computed to high
     %  relative precision when t is small whereas sin (pi-t) cannot.
 
+    I notice they also use the Negative Sum Trick (NTS) at the end.
+    NTS is when you set diagonal entries to be negative sum of the
+    other elements in the row.
     '''
     I = np.eye(N)  # Identity matrix
     DM = np.zeros((M,N,N))
@@ -29,7 +32,8 @@ def chebdif(N,M):
     k = np.arange(N)  # Compute theta vector
     th = k*np.pi/(N-1)
 
-    x = np.cos(np.pi*np.linspace(N-1,0,N)/(N-1))
+#    x = np.cos(np.pi*np.linspace(N-1,0,N)/(N-1))               # Old way with cos function.
+    x = np.sin(np.pi*((N-1)-2*np.linspace(N-1,0,N))/(2*(N-1)))  # Compute Chebyshev points in the way W&R did it, with sin function.
     x = x[::-1]
     T = np.tile(th/2,(N,1))
     DX = 2*np.sin(T.T+T)*np.sin(T.T-T)               # Trigonometric identity.
@@ -50,7 +54,7 @@ def chebdif(N,M):
                                           
     for ell in range(M):
         D = (ell+1)*Z*(C*np.tile(np.diag(D),(N,1)).T - D)  # Off-diagonals    
-        D = D - np.diag(np.diag(D)+np.sum(D,axis=1)) #- np.diag(np.sum(D,axis=1))   # Correct main diagonal of D
+        D[range(N),range(N)]= -np.sum(D,axis=1)       # Correct main diagonal of D - Negative sum trick!
         DM[ell,:,:] = D                               # Store current D in DM
 
     return x,DM
